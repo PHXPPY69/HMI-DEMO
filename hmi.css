@@ -13,7 +13,11 @@
   --danger:        #ff5a64;
 
   /* Layout */
+<<<<<<< HEAD
   --btn-h:         400px;
+=======
+  --btn-h:         410px;
+>>>>>>> a7ec934 (update Responsive)
 
   /* ENV card */
   --env-bg:        #808fa6;
@@ -687,6 +691,7 @@ body{
   .grid{ grid-template-columns: 300px 1fr 660px; }
 }
 @media (max-width:1400px){
+<<<<<<< HEAD
   .cells{ grid-template-columns: repeat(2, minmax(220px, 1fr)); }
 }
 @media (max-width:1100px){
@@ -700,3 +705,181 @@ body{
     grid-template-columns: 1fr;
   }
 }
+=======
+  
+  .cells{ 
+    grid-template-columns: repeat(3, var(--cell-w)); 
+  }
+}
+
+/* ---------- Replace your existing @media (max-width:1240px) with this block ---------- */
+@media (max-width:1240px) {
+  /* เปลี่ยน layout ของกริดเป็น stack (1 คอลัมน์) */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto; /* left / order / chart / machine / cells */
+    gap: 16px;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* ยกเลิกพฤติกรรม span ที่อาจมีจาก CSS เดิม */
+  .left {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    align-self: start;
+  }
+
+  /* ปรับให้ Order, Chart, Machine อยู่ในคอลัมน์เดียวกัน (เรียงตาม DOM) */
+  .order,
+  .chart.card,
+  .machine.card {
+    grid-column: 1;
+    grid-row: auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  /* ===== ปรับ cells: ให้กึ่งกลาง และ responsive ภายใน ===== */
+  .cells {
+    grid-column: 1;
+    grid-row: auto;
+    margin: 0 auto;                     /* เอากริดไปกึ่งกลาง container */
+    width: 100%;
+    max-width: calc(3 * var(--cell-w) + 2 * var(--cell-gap)); /* กำหนดขีดจำกัดให้กริดไม่เต็มหน้า */
+    box-sizing: border-box;
+    gap: 12px;
+
+    /* ให้เป็น responsive grid: auto-fit จะพยายามใส่คอลัมน์ขนาด var(--cell-w) ให้เต็มแถว,
+       ถ้าแคบจะลดเป็น 2 หรือ 1 คอลัมน์อัตโนมัติ */
+    grid-template-columns: repeat(auto-fit, minmax(var(--cell-w), 1fr));
+
+    /* จัดทั้งกริดให้อยู่กลาง และจัดไอเท็มในคอลัมน์ให้อยู่กลางคอลัมน์ด้วย */
+    justify-content: center;
+    justify-items: center;
+    align-items: start;
+  }
+
+  /* ให้การ์ดใน cells มีขนาดตามตัวแปร --cell-w (ไม่ยืดเต็ม column) */
+  .cells .card.cell {
+    width: var(--cell-w);    /* ให้การ์ดมีความกว้างตามตัวแปร */
+    max-width: none;
+    min-width: 0;
+    justify-self: center;    /* กรณีคอลัมน์กว้าง ให้การ์ดอยู่ตรงกลางคอลัมน์ */
+  }
+
+  /* ปรับ scale ของ cell ให้เล็กลง (ลดความสูง/ฟอนต์/ช่องว่าง) */
+  :root { --cell-scale: 0.8; }
+
+  /* ปรับปุ่ม/โดนัท/left widgets ให้ย่อสอดคล้องกับ scale */
+  .btn { height: calc(var(--btn-h) * var(--cell-scale)); font-size: calc(1rem * var(--cell-scale)); }
+  .donut-svg { width: 160px; height: 160px; }
+  .env-card .env .val { font-size: calc(var(--env-font, 42px) * var(--cell-scale)); }
+
+  /* ย่อขนาด Order card (padding / font / kv grid) */
+  .order { padding: 12px; }
+  .order .title { font-size: 1.15rem; }
+  .order .kv { grid-template-columns: 110px 1fr; font-size: 0.95rem; gap: 6px 10px; }
+  .order .badge { position: absolute; top: 12px; right: 12px; padding: 6px 10px; font-size:0.8rem; transform:none; }
+
+  /* ลดความสูงกราฟและระยะรอบๆ */
+  .chart-frame { height: 150px; margin: 8px 8px 10px; }
+  .chart-head { font-size: .85rem; }
+
+  /* ป้องกันภาพ/svg ล้น */
+  img, svg { max-width:100%; height:auto; display:block; }
+}
+
+/* ===========================
+   เพิ่มขนาดตัวอักษรเมื่อหน้าจอถูกย่อ
+   (วางไว้ท้าย hmi.css)
+   =========================== */
+
+/* -- บนหน้าจอ <= 1240px: ขยายฟอนต์เล็กน้อยเพื่อชดเชยการย่อขององค์ประกอบ */
+@media (max-width:1240px) {
+  /* ถ้าคุณใช้ --cell-scale ให้เพิ่มตัวช่วย scale สำหรับฟอนต์ */
+  :root { --font-bump: 1.08; } /* ปรับค่านี้เป็น 1.0..1.3 ตามชอบ */
+
+  /* Order */
+  .order .title { font-size: calc(1.5rem * var(--font-bump)); }
+  .order .kv { font-size: calc(0.95rem * var(--font-bump)); }
+
+  /* Left / Env */
+  .env-card .env .val { font-size: calc(var(--env-font, 42px) * var(--font-bump) * 0.9); }
+
+  /* Donut text */
+  .donut-only .donut-svg #donutText { font-size: calc(10px * var(--font-bump) * 1.1); }
+
+  /* Buttons text */
+  .btn { font-size: calc(1rem * var(--font-bump)); }
+
+  /* Chart / legend / x-axis */
+  .chart-head, .legend { font-size: calc(.9rem * var(--font-bump)); }
+  .xaxis { font-size: calc(.78rem * var(--font-bump)); }
+
+  /* Machine tags */
+  .motor-tag { font-size: calc(.8rem * var(--font-bump)); }
+
+  /* Cells: header + percent */
+  .card.cell h4 { font-size: calc(var(--font-h4, 1.84rem) * var(--font-bump) * 0.95); }
+  .card.cell .pct { font-size: calc(var(--font-pct, .84rem) * var(--font-bump)); }
+}
+
+
+/* -- หน้าจอเล็กกว่า 980px: ขยายมากขึ้น (แต่ไม่เยอะจนเกะกะ) */
+@media (max-width:980px) {
+  :root { --font-bump: 1.18; }
+
+  /* Order */
+  .order .title { font-size: calc(1.3rem * var(--font-bump)); } /* เล็กลงจาก desktop แต่ bump ขึ้น */
+  .order .kv { font-size: calc(.92rem * var(--font-bump)); }
+
+  /* Left / Env */
+  .env-card .env .val { font-size: calc(var(--env-font, 42px) * var(--font-bump) * 0.85); }
+
+  /* Donut text — ใหญ่ขึ้นเพื่ออ่านง่ายบนมือถือ */
+  .donut-only .donut-svg #donutText { font-size: calc(10px * var(--font-bump)); }
+
+  /* Buttons */
+  .btn { font-size: calc(1.02rem * var(--font-bump)); }
+
+  /* Chart */
+  .chart-head, .legend { font-size: calc(.8rem * var(--font-bump)); }
+  .xaxis { font-size: calc(.75rem * var(--font-bump)); }
+
+  /* Machine */
+  .motor-tag { font-size: calc(.85rem * var(--font-bump)); padding: 3px 6px; }
+
+  /* Cells */
+  .card.cell h4 { font-size: calc(1.2rem * var(--font-bump)); }
+  .card.cell .pct { font-size: calc(.9rem * var(--font-bump)); }
+}
+
+
+/* -- หน้าจอเล็กสุด <=700px: ขยายฟอนต์อีกนิด (อ่านง่าย) */
+@media (max-width:700px) {
+  :root { --font-bump: 1.28; }
+
+  .order .title { font-size: calc(1.15rem * var(--font-bump)); }
+  .order .kv { font-size: calc(.9rem * var(--font-bump)); }
+
+  .env-card .env .val { font-size: calc(var(--env-font, 42px) * var(--font-bump) * 0.75); }
+  .donut-only .donut-svg #donutText { font-size: calc(10px * var(--font-bump)); }
+
+  .btn { font-size: calc(1.05rem * var(--font-bump)); }
+
+  .chart-head, .legend { font-size: calc(.75rem * var(--font-bump)); }
+  .xaxis { font-size: calc(.72rem * var(--font-bump)); }
+
+  .motor-tag { font-size: calc(.9rem * var(--font-bump)); }
+
+  .card.cell h4 { font-size: calc(1.05rem * var(--font-bump)); }
+  .card.cell .pct { font-size: calc(.95rem * var(--font-bump)); }
+  :root { --cell-scale: 0.7; }
+  /* สุดท้าย: ปรับความสูงปุ่มขั้นต่ำ ป้องกันตัวหนังสือล้น */
+  .btn { min-height: 100px; }
+}
+
+>>>>>>> a7ec934 (update Responsive)
