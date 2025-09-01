@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ============ Cell 1 — CSS (ทับไฟล์เดิมได้เลย) ============ */
 :root{
   --bg:#0b1320; --panel:#122033; --edge:#2a3e5c; --ink:#eaf1ff;
@@ -225,7 +224,6 @@ body{margin:0;background:var(--bg);color:var(--ink);
   .btn{ --btn-h:200px }
 }
 
-=======
 /* ============ Cell 1 — CSS (ทับไฟล์เดิมได้เลย) ============ */
 :root{
   --bg:#0b1320; --panel:#122033; --edge:#2a3e5c; --ink:#eaf1ff;
@@ -452,4 +450,3 @@ body{margin:0;background:var(--bg);color:var(--ink);
   .btn{ --btn-h:200px }
 }
 
->>>>>>> a7ec934 (update Responsive)

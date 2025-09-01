@@ -13,12 +13,8 @@
   --danger:        #ff5a64;
 
   /* Layout */
-<<<<<<< HEAD
   --btn-h:         400px;
-=======
   --btn-h:         410px;
->>>>>>> a7ec934 (update Responsive)
-
   /* ENV card */
   --env-bg:        #808fa6;
   --env-br:        #6f7fa0;
@@ -691,7 +687,6 @@ body{
   .grid{ grid-template-columns: 300px 1fr 660px; }
 }
 @media (max-width:1400px){
-<<<<<<< HEAD
   .cells{ grid-template-columns: repeat(2, minmax(220px, 1fr)); }
 }
 @media (max-width:1100px){
@@ -705,12 +700,9 @@ body{
     grid-template-columns: 1fr;
   }
 }
-=======
-  
   .cells{ 
     grid-template-columns: repeat(3, var(--cell-w)); 
   }
-}
 
 /* ---------- Replace your existing @media (max-width:1240px) with this block ---------- */
 @media (max-width:1240px) {
@@ -881,5 +873,3 @@ body{
   /* สุดท้าย: ปรับความสูงปุ่มขั้นต่ำ ป้องกันตัวหนังสือล้น */
   .btn { min-height: 100px; }
 }
-
->>>>>>> a7ec934 (update Responsive)
